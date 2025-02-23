@@ -4,19 +4,13 @@
 
 #include "http.h"
 #include "char_buf.h"
+#include "hash_table.h"
 
-/**
- * TODO: process bare CRs
- */
+
 int parse_http(char *raw, size_t req_len, CharBuf *res)
 {
-    /**
-     *   HTTP-message   = start-line CRLF
-     *                  *( field-line CRLF )
-     *                  CRLF
-     *                  [ message-body ]
-     */
-
+    HashTable *http_headers = ht_create(100);
+    
     int left = 0, right = 0;
     FILE *fp;
     char *line;
